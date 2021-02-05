@@ -70,7 +70,7 @@ def process(
 
 
 def cli():
-    parser = argparse.ArgumentParser(description='Update TLD names')
+    parser = argparse.ArgumentParser(description='Restore the broken URLs of the Great Suspender browser extension')
     parser.add_argument(
         "--in-file",
         dest="in_file",
