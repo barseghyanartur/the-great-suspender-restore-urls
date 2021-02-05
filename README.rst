@@ -11,9 +11,10 @@ Background
 If you used to use The Great Suspender Chrome extension, you would notice (as 
 of 2020-02-04) that it has been banned by Google Chrome for being a malware.
 
-The latest release `v7.1.6 <https://github.com/greatsuspender/thegreatsuspender/releases/tag/v7.1.6>`__,
-if installed from source, works well for me. However, your saved tabs won't 
-reload as something has changed in between the `good` and the `bad` releases.
+The last-known-good-version on GitHub, release `v7.1.6 <https://github.com/greatsuspender/thegreatsuspender/releases/tag/v7.1.6>`__,
+works well for me, if installed from source. However, your saved
+tabs won't reload as something has changed in between the `good` and the `bad`
+releases.
 
 What to do? Would you just loose all precious URLs and saved sessions? If you 
 are OK with that, just pass by. Otherwise, read further.
@@ -38,7 +39,8 @@ How to fix the broken tabs
     restore-the-great-suspender-urls --in-file=tabs.json --out-file=tabs-restored.json
 
 4. Use the `FreshStart - Cross Browser Session Manager <https://chrome.google.com/webstore/detail/freshstart-cross-browser/nmidkjogcjnnlfimjcedenagjfacpobb>`__
-   to import the tabs back.
+   to import the tabs back (paste the contents of the ``tabs-restored.json``
+   in the import session window).
    
 Prerequisites
 =============
