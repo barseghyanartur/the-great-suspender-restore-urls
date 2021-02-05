@@ -15,6 +15,21 @@ SESSION_NAME_SUFFIX = " - cleaned"
 
 LOGGER = logging.getLogger(__name__)
 
+__version__ = '0.2'
+__author__ = 'Artur Barseghyan'
+__copyright__ = '2021 Artur Barseghyan'
+__license__ = 'MIT License'
+__all__ = (
+    'SESSION_NAME_SUFFIX',
+    'URL_PREFIX',
+    'URL_PREFIX_WITH_DASH',
+    'URL_PREFIX_WITH_DASH_LENGTH',
+    'clean_data',
+    'clean_item',
+    'cli',
+    'process',
+)
+
 
 def clean_item(item: dict, verbose: bool = False) -> dict:
     url = item["url"]
@@ -31,18 +46,11 @@ def clean_item(item: dict, verbose: bool = False) -> dict:
     return item
 
 
-def process(
-    in_file: str,
-    out_file: str,
+def clean_data(
+    data: dict,
     session_name_suffix: str = SESSION_NAME_SUFFIX,
     verbose: bool = False
-) -> bool:
-    if not os.path.isabs(in_file):
-        in_file = os.path.join(CURRENT_DIR_PATH, in_file)
-
-    with open(in_file, "r", encoding='utf8') as json_in_file:
-        data = json.load(json_in_file)
-
+) -> dict:
     cleaned_tabs = []
     tabs = data["tabs"]
 
@@ -59,6 +67,26 @@ def process(
 
     data["tabs"] = cleaned_tabs
     data["title"] += session_name_suffix
+    return data
+
+
+def process(
+    in_file: str,
+    out_file: str,
+    session_name_suffix: str = SESSION_NAME_SUFFIX,
+    verbose: bool = False
+) -> bool:
+    if not os.path.isabs(in_file):
+        in_file = os.path.join(CURRENT_DIR_PATH, in_file)
+
+    with open(in_file, "r", encoding='utf8') as json_in_file:
+        data = json.load(json_in_file)
+
+    data = clean_data(
+        data,
+        session_name_suffix=session_name_suffix,
+        verbose=verbose
+    )
 
     if not os.path.isabs(out_file):
         out_file = os.path.join(CURRENT_DIR_PATH, out_file)

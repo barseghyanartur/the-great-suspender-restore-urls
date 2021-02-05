@@ -1,13 +1,11 @@
 import os
-import sys
-from setuptools import setup, find_packages
 
 try:
     readme = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 except:
     readme = ''
 
-version = '0.1'
+version = '0.2'
 
 try:
     from setuptools import setup
@@ -23,9 +21,13 @@ setup(
     url='http://github.com/barseghyanartur/the-great-suspender-restore-urls',
     py_modules=['thegreatsuspender'],
     project_urls={
-        "Bug Tracker": "https://github.com/barseghyanartur/the-great-suspender-restore-urls/issues",
-        "Source Code": "https://github.com/barseghyanartur/the-great-suspender-restore-urls/",
-        "Changelog": "https://github.com/barseghyanartur/the-great-suspender-restore-urls/blob/master/CHANGELOG.md",
+        "Bug Tracker": "https://github.com/barseghyanartur/"
+                       "the-great-suspender-restore-urls/issues",
+        "Source Code": "https://github.com/barseghyanartur/"
+                       "the-great-suspender-restore-urls/",
+        "Changelog": "https://github.com/barseghyanartur/"
+                     "the-great-suspender-restore-urls/blob/master/"
+                     "CHANGELOG.rst",
     },
     entry_points={
         'console_scripts': [
