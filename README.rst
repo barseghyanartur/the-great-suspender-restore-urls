@@ -38,7 +38,7 @@ How to fix the broken tabs
    extension to export all your tabs into a JSON and save it into a file (for
    instance, name it ``tabs.json``).
 
-2. Install `the-great-suspender-restore-urls` package:
+2. Install ``the-great-suspender-restore-urls`` (this) package:
 
 .. code-block:: sh
 
