@@ -5,6 +5,18 @@ the-great-suspender-restore-urls
 Restore the broken URLs of the Great Suspender browser (Google Chrome, Firefox)
 extension.
 
+.. image:: https://img.shields.io/pypi/v/the-great-suspender-restore-urls.svg
+   :target: https://pypi.python.org/pypi/the-great-suspender-restore-urls
+   :alt: PyPI Version
+
+.. image:: https://img.shields.io/pypi/pyversions/the-great-suspender-restore-urls.svg
+    :target: https://pypi.python.org/pypi/the-great-suspender-restore-urls/
+    :alt: Supported Python versions
+
+.. image:: https://img.shields.io/badge/license-MIT-green.svg
+   :target: https://github.com/barseghyanartur/the-great-suspender-restore-urls/#License
+   :alt: MIT
+
 Background
 ==========
 
