@@ -41,7 +41,23 @@ How to fix the broken tabs
 4. Use the `FreshStart - Cross Browser Session Manager <https://chrome.google.com/webstore/detail/freshstart-cross-browser/nmidkjogcjnnlfimjcedenagjfacpobb>`__
    to import the tabs back (paste the contents of the ``tabs-restored.json``
    in the import session window).
-   
+
+Usage options
+=============
+
+By default, your existing session names will get a " - cleaned" suffix.
+In order to tweak that, use the ``--session-name-suffix`` argument.
+
+To have a verbose output, add the ``--verbose`` argument.
+
+.. code-block:: sh
+
+    restore-the-great-suspender-urls \
+        --in-file=tabs.json \
+        --out-file=tabs-restored.json \
+        --session-name-suffix=' - FIXED' \
+        --verbose
+
 Prerequisites
 =============
 

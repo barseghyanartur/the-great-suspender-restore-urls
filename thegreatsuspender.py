@@ -5,7 +5,7 @@ from urllib.parse import parse_qs
 import os
 import sys
 
-CURRENT_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+CURRENT_DIR_PATH = os.path.abspath(os.getcwd())
 
 URL_PREFIX = "chrome-extension://klbibkeccnjlkjkiokjodocebajanakg/" \
              "suspended.html"
@@ -102,10 +102,16 @@ def cli():
     args = parser.parse_args(sys.argv[1:])
     in_file = args.in_file
     out_file = args.out_file
+    session_name_suffix = args.session_name_suffix
     verbose = args.verbose
 
     return int(
-        not process(in_file, out_file, verbose=verbose)
+        not process(
+            in_file,
+            out_file,
+            session_name_suffix=session_name_suffix,
+            verbose=verbose
+        )
     )
 
 
