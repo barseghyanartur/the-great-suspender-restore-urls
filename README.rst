@@ -34,6 +34,9 @@ are OK with that, just pass by. Otherwise, read further.
 How to fix the broken tabs
 ==========================
 
+Locally (using this package)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 1. Use the `FreshStart - Cross Browser Session Manager <https://chrome.google.com/webstore/detail/freshstart-cross-browser/nmidkjogcjnnlfimjcedenagjfacpobb>`__
    extension to export all your tabs into a JSON and save it into a file (for
    instance, name it ``tabs.json``).
@@ -53,6 +56,16 @@ How to fix the broken tabs
 4. Use the `FreshStart - Cross Browser Session Manager <https://chrome.google.com/webstore/detail/freshstart-cross-browser/nmidkjogcjnnlfimjcedenagjfacpobb>`__
    to import the tabs back (paste the contents of the ``tabs-restored.json``
    in the import session window).
+
+Online
+~~~~~~
+
+Build with FastAPI, VueJS and the ``the-great-suspender-restore-urls`` (this)
+package.
+
+- Check the `service <http://great-suspender-restore-urls.herokuapp.com/ui/index.html>`__
+- Read the `instructions <http://great-suspender-restore-urls.herokuapp.com/ui/about.html>`__
+- Source code is `available <https://github.com/barseghyanartur/the-great-suspender-restore-urls-service>`__.
 
 Usage options
 =============
