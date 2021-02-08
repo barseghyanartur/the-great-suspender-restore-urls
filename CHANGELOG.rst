@@ -15,6 +15,12 @@ are used for versioning (schema follows below):
   0.3.4 to 0.4).
 - All backwards incompatible changes are mentioned in this document.
 
+0.3
+---
+2021-02-08
+
+- Allow custom identifier of the ``The Great Suspender`` plugin.
+
 0.2
 ---
 2021-02-05

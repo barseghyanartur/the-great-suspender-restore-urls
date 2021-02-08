@@ -73,6 +73,13 @@ Usage options
 By default, your existing session names will get a " - cleaned" suffix.
 In order to tweak that, use the ``--session-name-suffix`` argument.
 
+By default, your the URL prefix used to identify tabs suspended by
+``The Great Suspender`` extension looks as follows:
+``chrome-extension://klbibkeccnjlkjkiokjodocebajanakg/suspended.html``,
+where the ``klbibkeccnjlkjkiokjodocebajanakg`` is the extension ID.
+If somehow your extension ID is different, use the ``--extension-id`` argument
+to tweak that.
+
 To have a verbose output, add the ``--verbose`` argument.
 
 .. code-block:: sh
@@ -81,6 +88,7 @@ To have a verbose output, add the ``--verbose`` argument.
         --in-file=tabs.json \
         --out-file=tabs-restored.json \
         --session-name-suffix=' - FIXED' \
+        --extension-id='klbibkeccnjlkjkiokjodocebajanakg' \
         --verbose
 
 Prerequisites

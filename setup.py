@@ -5,7 +5,7 @@ try:
 except:
     readme = ''
 
-version = '0.2'
+version = '0.3'
 
 try:
     from setuptools import setup
