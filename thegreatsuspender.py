@@ -2,46 +2,44 @@ import argparse
 import json
 import logging
 import os
+import re
 import sys
 from urllib.parse import parse_qs
 from typing import Tuple
 
-__version__ = "0.3"
+__version__ = "0.4"
 __author__ = "Artur Barseghyan"
 __copyright__ = "2021 Artur Barseghyan"
 __license__ = "MIT License"
 __all__ = (
-    "EXTENSION_ID",
+    "REGEX",
+    "REGEX_PATTERN",
     "SESSION_NAME_SUFFIX",
-    "URL_PREFIX_WITH_DASH",
-    "URL_PREFIX_WITH_DASH_LENGTH",
     "clean_data",
     "clean_item",
     "cli",
     "process",
+    "re_clean_data",
+    "re_clean_item",
 )
 
 SESSION_NAME_SUFFIX = " - cleaned"
-EXTENSION_ID = "klbibkeccnjlkjkiokjodocebajanakg"
 CURRENT_DIR_PATH = os.path.abspath(os.getcwd())
+REGEX_PATTERN = r"^chrome\-extension\:\/\/[a-z]+\/suspended\.html#(.+)$"
+REGEX = re.compile(REGEX_PATTERN)
 LOGGER = logging.getLogger(__name__)
 
 
-def get_settings(extension_id: str = EXTENSION_ID) -> Tuple[str, int]:
+def get_settings(extension_id: str) -> Tuple[str, int]:
     url_prefix_with_dash = f"chrome-extension://{extension_id}/suspended.html#"
     url_prefix_with_dash_length = len(url_prefix_with_dash)
     return url_prefix_with_dash, url_prefix_with_dash_length
 
 
-URL_PREFIX_WITH_DASH, URL_PREFIX_WITH_DASH_LENGTH = get_settings(
-    extension_id=EXTENSION_ID
-)
-
-
 def clean_item(
     item: dict,
-    url_prefix_with_dash: str = URL_PREFIX_WITH_DASH,
-    url_prefix_with_dash_length: int = URL_PREFIX_WITH_DASH_LENGTH,
+    url_prefix_with_dash: str,
+    url_prefix_with_dash_length: int,
     verbose: bool = False,
 ) -> dict:
     url = item["url"]
@@ -58,21 +56,35 @@ def clean_item(
     return item
 
 
+def re_clean_item(
+    item: dict,
+    verbose: bool = False,
+) -> dict:
+    url = item["url"]
+    match = REGEX.match(url)
+    if match:
+        cleaned_item = parse_qs(match.groups()[0])
+        item["url"] = cleaned_item["uri"][0]
+        item["title"] = cleaned_item["ttl"][0]
+        return item
+    if verbose:
+        LOGGER.warning(f"Skipping {item} as no suspended tab")
+        LOGGER.exception(item)
+    return item
+
+
 def clean_data(
     data: dict,
+    extension_id: str,
     session_name_suffix: str = SESSION_NAME_SUFFIX,
-    extension_id: str = None,
     verbose: bool = False,
 ) -> dict:
     cleaned_tabs = []
     tabs = data["tabs"]
-    if extension_id:
-        url_prefix_with_dash, url_prefix_with_dash_length = get_settings(
-            extension_id
-        )
-    else:
-        url_prefix_with_dash = URL_PREFIX_WITH_DASH
-        url_prefix_with_dash_length = URL_PREFIX_WITH_DASH_LENGTH
+
+    url_prefix_with_dash, url_prefix_with_dash_length = get_settings(
+        extension_id
+    )
 
     for item in tabs:
         try:
@@ -80,6 +92,31 @@ def clean_data(
                 item,
                 url_prefix_with_dash=url_prefix_with_dash,
                 url_prefix_with_dash_length=url_prefix_with_dash_length,
+                verbose=verbose,
+            )
+        except Exception as err:
+            if verbose:
+                LOGGER.warning(f"Error parsing {item}")
+                LOGGER.exception(err)
+                LOGGER.exception(item)
+        cleaned_tabs.append(item)
+
+    data["tabs"] = cleaned_tabs
+    data["title"] += session_name_suffix
+    return data
+
+
+def re_clean_data(
+    data: dict,
+    session_name_suffix: str = SESSION_NAME_SUFFIX,
+    verbose: bool = False,
+) -> dict:
+    cleaned_tabs = []
+    tabs = data["tabs"]
+    for item in tabs:
+        try:
+            item = re_clean_item(
+                item,
                 verbose=verbose,
             )
         except Exception as err:
@@ -107,12 +144,19 @@ def process(
     with open(in_file, "r", encoding="utf8") as json_in_file:
         data = json.load(json_in_file)
 
-    data = clean_data(
-        data,
-        session_name_suffix=session_name_suffix,
-        extension_id=extension_id,
-        verbose=verbose,
-    )
+    if extension_id:
+        data = clean_data(
+            data,
+            session_name_suffix=session_name_suffix,
+            extension_id=extension_id,
+            verbose=verbose,
+        )
+    else:
+        data = re_clean_data(
+            data,
+            session_name_suffix=session_name_suffix,
+            verbose=verbose,
+        )
 
     if not os.path.isabs(out_file):
         out_file = os.path.join(CURRENT_DIR_PATH, out_file)
@@ -153,9 +197,8 @@ def cli():
         "--extension-id",
         dest="extension_id",
         type=str,
-        default=EXTENSION_ID,
-        help=f"ID of ``The Great Suspender`` extension. "
-        f"Defaults to `{EXTENSION_ID}`.",
+        help=f"ID of ``The Great Suspender`` extension. If left blank, regular"
+             f"expression match will be used.",
     )
     parser.add_argument(
         "--verbose",

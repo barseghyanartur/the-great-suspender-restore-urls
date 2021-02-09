@@ -35,7 +35,7 @@ How to fix the broken tabs
 ==========================
 
 Locally (using this package)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 1. Use the `FreshStart - Cross Browser Session Manager <https://chrome.google.com/webstore/detail/freshstart-cross-browser/nmidkjogcjnnlfimjcedenagjfacpobb>`__
    extension to export all your tabs into a JSON and save it into a file (for
@@ -58,7 +58,7 @@ Locally (using this package)
    in the import session window).
 
 Online
-~~~~~~
+------
 
 Build with FastAPI, VueJS and the ``the-great-suspender-restore-urls`` (this)
 package.
@@ -70,17 +70,10 @@ package.
 Usage options
 =============
 
+--session-name-suffix
+---------------------
 By default, your existing session names will get a " - cleaned" suffix.
 In order to tweak that, use the ``--session-name-suffix`` argument.
-
-By default, your the URL prefix used to identify tabs suspended by
-``The Great Suspender`` extension looks as follows:
-``chrome-extension://klbibkeccnjlkjkiokjodocebajanakg/suspended.html``,
-where the ``klbibkeccnjlkjkiokjodocebajanakg`` is the extension ID.
-If somehow your extension ID is different, use the ``--extension-id`` argument
-to tweak that.
-
-To have a verbose output, add the ``--verbose`` argument.
 
 .. code-block:: sh
 
@@ -88,7 +81,33 @@ To have a verbose output, add the ``--verbose`` argument.
         --in-file=tabs.json \
         --out-file=tabs-restored.json \
         --session-name-suffix=' - FIXED' \
+        --verbose
+
+--extension-id
+--------------
+The URL prefix used to identify tabs suspended by ``The Great Suspender``
+extension looks as follows:
+``chrome-extension://klbibkeccnjlkjkiokjodocebajanakg/suspended.html``,
+where the ``klbibkeccnjlkjkiokjodocebajanakg`` is the extension ID.
+If you leave this argument out, regular expression match will be used.
+
+.. code-block:: sh
+
+    restore-the-great-suspender-urls \
+        --in-file=tabs.json \
+        --out-file=tabs-restored.json \
         --extension-id='klbibkeccnjlkjkiokjodocebajanakg' \
+        --verbose
+
+--verbose
+---------
+To have a verbose output, add the ``--verbose`` argument.
+
+.. code-block:: sh
+
+    restore-the-great-suspender-urls \
+        --in-file=tabs.json \
+        --out-file=tabs-restored.json \
         --verbose
 
 Prerequisites
