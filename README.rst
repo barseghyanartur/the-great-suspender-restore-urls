@@ -23,10 +23,11 @@ Background
 If you used to use The Great Suspender Chrome extension, you would notice (as 
 of 2021-02-04) that it has been banned by Google Chrome for being a malware.
 
-The last-known-good-version on GitHub, release `v7.1.6 <https://github.com/greatsuspender/thegreatsuspender/releases/tag/v7.1.6>`__,
-works well for me, if installed from source. However, your saved
-tabs won't reload as something has changed in between the `good` and the `bad`
-releases.
+The `Marvellous Suspender <https://chrome.google.com/webstore/detail/the-marvellous-suspender/noogafoofpebimajpfpamcfhoaifemoa>`__
+(`fork <https://github.com/gioxx/MarvellousSuspender>`__ of the last-known-good-version GitHub release `v7.1.6 <https://github.com/greatsuspender/thegreatsuspender/releases/tag/v7.1.6>`__),
+works well for me. However, your existing suspended tabs (suspended by The
+Great Suspender) won't reload as something has changed in between the `good`
+and the `bad` releases.
 
 What to do? Would you just loose all precious URLs and saved sessions? If you 
 are OK with that, just pass by. Otherwise, read further.
