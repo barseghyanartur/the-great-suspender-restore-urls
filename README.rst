@@ -44,15 +44,15 @@ Locally (using this package)
 
 2. Install ``the-great-suspender-restore-urls`` (this) package:
 
-.. code-block:: sh
+   .. code-block:: sh
 
-  pip install the-great-suspender-restore-urls
+       pip install the-great-suspender-restore-urls
 
 3. Fix your broken tabs:
 
-.. code-block:: sh
+   .. code-block:: sh
 
-    restore-the-great-suspender-urls --in-file=tabs.json --out-file=tabs-restored.json
+       restore-the-great-suspender-urls --in-file=tabs.json --out-file=tabs-restored.json
 
 4. Use the `FreshStart - Cross Browser Session Manager <https://chrome.google.com/webstore/detail/freshstart-cross-browser/nmidkjogcjnnlfimjcedenagjfacpobb>`__
    to import the tabs back (paste the contents of the ``tabs-restored.json``
